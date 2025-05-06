@@ -7,18 +7,21 @@ set(SOURCE_FILES
     main.cpp
 )
 
+add_subdirectory(fltk-1.4.1)
 
-find_package(OpenGL REQUIRED)
-find_package(GLUT REQUIRED)
-
-add_executable(${PROJECT_NAME}
-    ${SOURCE_FILES}
+include_directories(
+    /usr/include
+    /usr/include/GL
 )
 
-add_subdirectory(fltk-1.4.1)
-include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
-target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
-target_link_libraries(${PROJECT_NAME} fltk)
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+
+target_link_libraries(${PROJECT_NAME}
+    GL      # OpenGL
+    GLEW    # GLEW
+    glut    # GLUT or freeglut
+    fltk
+)
 
 set_target_properties(${PROJECT_NAME}
     PROPERTIES
